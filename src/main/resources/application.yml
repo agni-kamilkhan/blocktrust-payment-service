@@ -2,7 +2,18 @@ app:
   id: blocktrust-payment-service
   name: Blocktrust Payment Service
 
+#payu;
+#  merch
 quarkus:
+
+  tls:
+    trust-all: true;
+
+  rest-client:
+    extensions-api:
+      url: https://stage.code.quarkus.io/api
+      scope: javax.inject.Singleton
+
   log:
     category:
       "com.onblocktrust":
