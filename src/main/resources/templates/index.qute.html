@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{appName}</title>
+
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <link rel="stylesheet" href="assets/zephyr/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+
+</head>
+<body class="d-flex flex-column h-100">
+<div id="app">
+    <header class="fixed-top bg-light border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="index">{appName}</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto" >
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index">
+                                <i class="fa fa-home px-1" aria-hidden="true"></i> Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row my-1">
+                <div class="col-md-4">
+                    <strong>Home</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="container flex-shrink-0">
+        <br/>
+        <div class=".d-none .d-sm-block .d-md-none">&nbsp;</div>
+        <div class="container">
+            <h1>Welcome!</h1>
+            <br/>
+            <div class="lead">
+                Mode : <code>{appMode}</code>&nbsp;&nbsp;
+                <span v-if="appMode === 'DEVELOPMENT'">
+                    Dev UI is <a href="/q/dev">here</a>&nbsp;&nbsp;
+                    Swagger UI is <a href="/q/swagger-ui">here</a>
+                </span>
+            </div>
+            <br/>
+        </div>
+        <br/>
+    </main>
+
+    <footer class="footer bg-light border-top">
+        <div class="container">
+            <p class="text-center my-2">&copy; 2022 {appName}</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
