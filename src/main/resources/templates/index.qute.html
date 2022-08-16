@@ -212,24 +212,74 @@
 
 <script type="text/x-template" id="app-razorpay-success-view">
     <br/>
-    <!--
-    <pre>{{ itemS }}</pre>
-    -->
-    <h5>Razor Payment Id : <code>{{ item.razorpay_payment_id }}</code></h5>
-    <h5>Razor Order Id : <code>{{ item.razorpay_order_id }}</code></h5>
-    <h5>Razor Signature : <code>{{ item.razorpay_signature }}</code></h5>
+    <div class="row">
+        <div class="col-3">
+            <h5 class="float-end">Razor Payment Id</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.razorpay_payment_id }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Razor Order Id</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.razorpay_order_id }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Razor Signature</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.razorpay_signature }}</code></h5>
+        </div>
+    </div>
 </script>
 
 <script type="text/x-template" id="app-razorpay-failure-view">
     <br/>
-<!--    <pre>{{ itemS }}</pre>-->
-    <h5>Error Code : <code>{{ item.error.code }}</code></h5>
-    <h5>Error Description : <code>{{ item.error.description }}</code></h5>
-    <h5>Error Source : <code>{{ item.error.source }}</code></h5>
-    <h5>Error Step : <code>{{ item.error.step }}</code></h5>
-    <h5>Error Reason : <code>{{ item.error.reason }}</code></h5>
-    <h5>Error Order Id : <code>{{ item.error.metadata.order_id }}</code></h5>
-    <h5>Error Payment Id : <code>{{ item.error.metadata.payment_id }}</code></h5>
+    <div class="row">
+        <div class="col-3">
+            <h5 class="float-end">Error Code</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.code }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Description</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.description }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Source</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.source }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Step</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.step }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Reason</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.reason }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Order Id</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.metadata.order_id }}</code></h5>
+        </div>
+        <div class="col-3">
+            <h5 class="float-end">Error Payment Id</h5>
+        </div>
+        <div class="col-9">
+            <h5><code>{{ item.error.metadata.payment_id }}</code></h5>
+        </div>
+    </div>
 </script>
 
 <script type="text/x-template" id="app-root-view">

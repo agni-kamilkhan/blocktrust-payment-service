@@ -67,6 +67,11 @@ const razorpaySuccessView = {
     name: 'Razor Pay Success',
     template: '#app-razorpay-success-view',
     data() {
+//        razorpayService.successResponse = {
+//            razorpay_payment_id: 'pay_K6NOHhkiQ0VLYy',
+//            razorpay_order_id: 'order_K6NO4L5VqdghHS',
+//            razorpay_signature: 'bde3a3c9ca54475e624a3c2e9b363241c2e3eabf4a69d97fa119c42fbfbfe8bb'
+//        };
         return { item: razorpayService.successResponse, itemS: JSON.stringify(razorpayService.successResponse) };
     },
 }
