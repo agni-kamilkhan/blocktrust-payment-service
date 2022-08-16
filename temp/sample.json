@@ -1,0 +1,28 @@
+[
+  {
+    "name": "john",
+    "marks": [
+      {
+        "subject": "physics",
+        "mark": 67
+      },
+      {
+        "subject": "maths",
+        "mark": 80
+      }
+    ]
+  },
+  {
+    "name": "james",
+    "marks": [
+      {
+        "subject": "physics",
+        "mark": 67
+      },
+      {
+        "subject": "maths",
+        "mark": 88
+      }
+    ]
+  }
+]

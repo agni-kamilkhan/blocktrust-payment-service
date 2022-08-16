@@ -25,8 +25,14 @@ public class DefaultController {
 
     private final Template index;
 
+    @ConfigProperty(name = "app.id")
+    String appId;
+
     @ConfigProperty(name = "app.name")
     String appName;
+
+    @ConfigProperty(name = "app.gitTag")
+    String appGitTag;
 
     public DefaultController(Template index) {
         this.index = requireNonNull(index, "index template is required");
@@ -36,7 +42,11 @@ public class DefaultController {
     @Path("index")
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance get() {
-        return index.data("appName", this.appName).data("appMode", io.quarkus.runtime.LaunchMode.current());
+        String appMode = io.quarkus.runtime.LaunchMode.current().name();
+        return index.data("appName", this.appName)
+                .data("appMode", appMode)
+                .data("appVersion", this.appGitTag)
+                .data("appModeIsDev", appMode.equals("DEVELOPMENT"));
     }
 
     @GET
@@ -52,7 +62,9 @@ public class DefaultController {
     public Map<String, Object> appInfo() {
         return Map.of(
                 "mode", io.quarkus.runtime.LaunchMode.current(),
-                "name", appName
+                "id", this.appId,
+                "name", this.appName,
+                "gitTag", this.appGitTag
         );
     }
 

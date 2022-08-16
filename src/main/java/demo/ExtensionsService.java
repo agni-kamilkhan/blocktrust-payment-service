@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import java.util.Set;
 
 @Path("/extensions")
-@RegisterRestClient(configKey="extensions-api")
+@RegisterRestClient(configKey = "extensions-api")
 public interface ExtensionsService {
 
     @GET

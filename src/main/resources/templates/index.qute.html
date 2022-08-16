@@ -7,12 +7,157 @@
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/zephyr/bootstrap.min.css">
     <link rel="stylesheet" href="assets/styles.css">
 
 </head>
 <body class="d-flex flex-column h-100">
-<div id="app">
+
+<div id="app"></div>
+
+<script type="text/x-template" id="app-home-view">
+    <p>Welcome!</p>
+</script>
+
+<script type="text/x-template" id="app-payu-view">
+    <h5>Payment Detail</h5>
+    <br/>
+    <form action='https://test.payu.in/_payment' method='post' class="row g-3">
+        <div class="col-md-4">
+            <label for="merchantKey" class="form-label">Merchant Key</label>
+            <input type="text" class="form-control" id="merchantKey"
+                   name="key" v-model="item.key" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="tranId" class="form-label">Transaction Id</label>
+            <input type="text" class="form-control" id="tranId"
+                   name="txnid" v-model="item.txnid" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="productInfo" class="form-label">Product Info</label>
+            <input type="text" class="form-control" id="productInfo"
+                   name="productinfo" v-model="item.productinfo" required>
+        </div>
+        <div class="col-md-4">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount"
+                   name="amount" v-model="item.amount" required>
+        </div>
+        <div class="col-md-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email"
+                   name="email" v-model="item.email" required>
+        </div>
+        <div class="col-md-4">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="phone"
+                   name="phone" v-model="item.phone" required>
+        </div>
+        <div class="col-md-4">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName"
+                   name="firstname" v-model="item.firstname" required>
+        </div>
+        <!--
+        <div class="col-md-4">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastname"
+                   name="lastname" v-model="item.lastname" required>
+        </div>
+        -->
+        <div class="col-md-8 text-center">
+            <br/>
+            <button type="button" class="btn btn-warning py-2"
+                    @click="reComputeHashInputAndValue()">
+                Re-Compute Hash Input and Value</button>
+        </div>
+        <div class="col-md-6">
+            <label for="successUrl" class="form-label">Success URL</label>
+            <input type="text" class="form-control" id="successUrl"
+                   name="surl" v-model="item.surl" readonly>
+        </div>
+        <div class="col-md-6">
+            <label for="failureUrl" class="form-label">Failure URL</label>
+            <input type="text" class="form-control" id="failureUrl"
+                   name="furl" v-model="item.furl" readonly>
+        </div>
+        <div class="col-md-12">
+            <label for="hashValue" class="form-label">Hash Value</label>
+            <input type="text" class="form-control" id="hashValue"
+                   name="hash" v-model="item.hash" readonly>
+        </div>
+        <div class="col-12 text-center">
+            <input type="submit" value="Make Payment" class="btn btn-primary">
+        </div>
+    </form>
+    <br/>
+    <form class="row g-3">
+        <div class="col-md-12">
+            <label for="hashInput" class="form-label">Hash Input</label>
+            <input type="text" class="form-control" id="hashInput"
+                   name="hashInput" v-model="hashInput" readonly>
+        </div>
+        <div class="col-md-12">
+            <label for="hashSalt" class="form-label">Hash SALT</label>
+            <input type="text" class="form-control" id="hashSalt"
+                   name="hashSalt" v-model="hashSalt" readonly>
+        </div>
+    </form>
+    <!--
+    <input type="hidden" name="key" value="JP***g">
+    <input type="hidden" name="txnid" value="t6svtqtjRdl4ws">
+    <input type="hidden" name="productinfo" value="iPhone">
+    <input type="hidden" name="amount" value="10">
+    <input type="hidden" name="email" value="test@gmail.com">
+    <input type="hidden" name="firstname" value="Ashish">
+    <input type="hidden" name="lastname" value="Kumar">
+    <input type="hidden" name="phone" value="9988776655">
+    <input type="hidden" name="surl" value="https://apiplayground-response.herokuapp.com/">
+    <input type="hidden" name="furl" value="https://apiplayground-response.herokuapp.com/">
+    <input type="hidden" name="surl" value="https://localhost:9003/success">
+    <input type="hidden" name="furl" value="https://localhost:9003/failure">
+    <input type="hidden" name="hash"
+           value="eabec285da28fd0e3054d41a4d24fe9f7599c9d0b66646f7a9984303fd6124044b6206daf831e9a8bda28a6200d318293a13d6c193109b60bd4b4f8b09c90972">
+    -->
+</script>
+
+<script type="text/x-template" id="app-razorpay-view">
+    <h5>Order Request</h5>
+    <br/>
+    <!--
+    <form class="row g-3">
+        <div class="col-md-4">
+            <label for="itemCurrency" class="form-label">Currency</label>
+            <input type="text" class="form-control" id="itemCurrency"
+                   name="itemCurrency" v-model="item.currency" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemAmount" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="itemAmount"
+                   name="itemAmount" v-model="item.amount" required>
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" @click="createOrder"> Create Order </button>
+        </div>
+    </form>
+    <br/>
+    <h5>Order Response</h5>
+    <br/>
+    <pre>{{ orderResponse }}</pre>
+    -->
+</script>
+
+<script type="text/x-template" id="app-success-view">
+    <p>Welcome Success!</p>
+</script>
+
+<script type="text/x-template" id="app-failure-view">
+    <p>Welcome Failure!</p>
+</script>
+
+<script type="text/x-template" id="app-root-view">
+
     <header class="fixed-top bg-light border-bottom">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
@@ -20,10 +165,32 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto" >
                         <li class="nav-item">
-                            <a class="nav-link active" href="index">
-                                <i class="fa fa-home px-1" aria-hidden="true"></i> Home
-                            </a>
+                            <router-link to="/home" class="nav-link px-2"  :class="{ active: $route.name === 'Home' }">
+                                <i class="fa fa-home px-1"></i> Home
+                            </router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link to="/payu/pay" class="nav-link px-2"  :class="{ active: $route.name === 'PayU' }">
+                                PayU
+                            </router-link>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                            <router-link to="/razorpay/pay" class="nav-link px-2"  :class="{ active: $route.name === 'Razor Pay' }">
+                                Razor Pay
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/success" class="nav-link px-2"  :class="{ active: $route.name === 'Payment Success' }">
+                                Payment Success
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/failure" class="nav-link px-2"  :class="{ active: $route.name === 'Payment Failure' }">
+                                Payment Failure
+                            </router-link>
+                        </li>
+                        -->
                     </ul>
                 </div>
             </div>
@@ -31,7 +198,7 @@
         <div class="container">
             <div class="row my-1">
                 <div class="col-md-4">
-                    <strong>Home</strong>
+                    <strong class="text-camel-case">{{ $route.name }}</strong>
                 </div>
             </div>
         </div>
@@ -39,27 +206,49 @@
 
     <main role="main" class="container flex-shrink-0">
         <br/>
-        <div class=".d-none .d-sm-block .d-md-none">&nbsp;</div>
         <div class="container">
-            <h1>Welcome!</h1>
             <br/>
-            <div class="lead">
-                Mode : <code>{appMode}</code>&nbsp;&nbsp;
-                <span v-if="appMode === 'DEVELOPMENT'">
-                    Dev UI is <a href="/q/dev">here</a>&nbsp;&nbsp;
-                    Swagger UI is <a href="/q/swagger-ui">here</a>
-                </span>
-            </div>
-            <br/>
+            <router-view></router-view>
         </div>
         <br/>
     </main>
 
     <footer class="footer bg-light border-top">
         <div class="container">
-            <p class="text-center my-2">&copy; 2022 {appName}</p>
+            <div class="row p-2">
+                <div class="col-4">
+                    <span class="my-2">&copy; 2022 {appName}</span>
+                </div>
+                <div class="col-4 text-center">
+                    {#if appModeIsDev}
+                    <span>Dev UI is <a href="/q/dev">here</a>&nbsp;&nbsp;Swagger UI is <a href="/q/swagger-ui">here</a></span>
+                    {/if}
+                </div>
+                <div class="col-4">
+                    <span class="float-end">Version : <code>{appVersion}</code></span>
+                    <span class="float-end">Mode : <code>{appMode}</code>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+            </div>
+            <br/><br/><br/>
         </div>
     </footer>
-</div>
+
+</script>
+
+<!--
+<script src="https://cdn.jsdelivr.net/npm/jscrypto@1.0.3/index.min.js"></script>
+-->
+<script src="//cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+<script src="//unpkg.com/axios/dist/axios.min.js"></script>
+<script src="//unpkg.com/vue@next"></script>
+<script src="//unpkg.com/vue-router@4"></script>
+
+<script src="app-home-view.js"></script>
+<script src="app-payu-view.js"></script>
+<script src="app-razorpay-view.js"></script>
+<script src="app-success-view.js"></script>
+<script src="app-failure-view.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
