@@ -10,6 +10,14 @@ const http = axios.create({
     },
 });
 
+const razorpayService = {
+
+    successResponse: null,
+
+    failureResponse: null
+
+}
+
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes: [
@@ -20,6 +28,8 @@ const router = VueRouter.createRouter({
         { path: '/failure', name: failureView.name, component: failureView },
         { path: '/payu/pay', name: payuView.name, component: payuView },
         { path: '/razorpay/pay', name: razorpayView.name, component: razorpayView },
+        { path: '/razorpay/success', name: razorpaySuccessView.name, component: razorpaySuccessView },
+        { path: '/razorpay/failure', name: razorpayFailureView.name, component: razorpayFailureView },
     ]
 });
 

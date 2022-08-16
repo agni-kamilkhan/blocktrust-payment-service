@@ -8,11 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Kamil Khan
@@ -33,5 +31,18 @@ public class RazorPayController {
     public RazorPayOrder getCurrentOrder() throws IOException {
         return razorPayService.getCurrentOrder();
     }
+
+//    @GET
+//    @Path("callback")
+//    public Map<String, String> callback(@QueryParam("razorpay_payment_id") String paymentId) throws IOException {
+//        log.info("Razor Payment Id : {}", paymentId);
+//        return Map.of("razorpay_payment_id", paymentId);
+//    }
+//
+//    @GET
+//    @Path("cancel")
+//    public Map<String, String> cancel() throws IOException {
+//        return Map.of("razorpay_payment_id", "null");
+//    }
 
 }

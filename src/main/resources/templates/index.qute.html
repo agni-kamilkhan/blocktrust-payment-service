@@ -123,37 +123,107 @@
 </script>
 
 <script type="text/x-template" id="app-razorpay-view">
-    <h5>Order Request</h5>
+    <h5>Payment Detail</h5>
     <br/>
-    <!--
-    <form class="row g-3">
+    <form class="row g-3" methodx="POST" actionx="https://api.razorpay.com/v1/checkout/embedded">
         <div class="col-md-4">
-            <label for="itemCurrency" class="form-label">Currency</label>
-            <input type="text" class="form-control" id="itemCurrency"
-                   name="itemCurrency" v-model="item.currency" required readonly>
+            <label for="itemKeyId" class="form-label">Key</label>
+            <input type="text" class="form-control" id="itemKeyId"
+                   name="key_id" v-model="item.keyId" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemOrderId" class="form-label">Order Id</label>
+            <input type="text" class="form-control" id="itemOrderId"
+                   name="order_id" v-model="item.orderId" required readonly>
         </div>
         <div class="col-md-4">
             <label for="itemAmount" class="form-label">Amount</label>
             <input type="text" class="form-control" id="itemAmount"
-                   name="itemAmount" v-model="item.amount" required>
+                   name="amount" v-model="item.amount" required readonly>
         </div>
+        <div class="col-md-4">
+            <label for="itemBusinessName" class="form-label">Business Name</label>
+            <input type="text" class="form-control" id="itemBusinessName"
+                   name="name" v-model="item.businessName" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemDescription" class="form-label">Description</label>
+            <input type="text" class="form-control" id="itemDescription"
+                   name="description" v-model="item.description" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemPrefillName" class="form-label">Customer Name</label>
+            <input type="text" class="form-control" id="itemPrefillName"
+                   name="prefill[name]" v-model="item.prefillName" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemPrefillContact" class="form-label">Customer Mobile</label>
+            <input type="text" class="form-control" id="itemPrefillContact"
+                   name="prefill[contact]" v-model="item.prefillContact" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemPrefillEmail" class="form-label">Customer Email</label>
+            <input type="text" class="form-control" id="itemPrefillEmail"
+                   name="prefill[email]" v-model="item.prefillEmail" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemPrefillAddress" class="form-label">Customer Address</label>
+            <input type="text" class="form-control" id="itemPrefillAddress"
+                   name="notes[shipping address]" v-model="item.prefillAddress" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemImageUrl" class="form-label">Business Logo URL</label>
+            <input type="text" class="form-control" id="itemImageUrl"
+                   name="image" v-model="item.imageUrl" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemCallbackUrl" class="form-label">Callback URL</label>
+            <input type="text" class="form-control" id="itemCallbackUrl"
+                   name="callback_url" v-model="item.callbackUrl" required readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="itemCancelUrl" class="form-label">Cancel URL</label>
+            <input type="text" class="form-control" id="itemCancelUrl"
+                   name="cancel_url" v-model="item.cancelUrl" required readonly>
+        </div>
+   <!--
+        <input type="hidden" name="key_id" value="keyId">
+        <input type="hidden" name="amount" value=1001>
+        <input type="hidden" name="order_id" value="item.id">
+        <input type="hidden" name="name" value="Acme Corp">
+        <input type="hidden" name="description" value="A Wild Sheep Chase">
+        <input type="hidden" name="image" value="https://cdn.razorpay.com/logos/BUVwvgaqVByGp2_large.jpg">
+        <input type="hidden" name="prefill[name]" value="Gaurav Kumar">
+        <input type="hidden" name="prefill[contact]" value="9123456780">
+        <input type="hidden" name="prefill[email]" value="gaurav.kumar@example.com">
+        <input type="hidden" name="notes[shipping address]" value="L-16, The Business Centre, 61 Wellfield Road, New Delhi - 110001">
+        <input type="hidden" name="callback_url" value="https://example.com/payment-callback">
+        <input type="hidden" name="cancel_url" value="https://example.com/payment-cancel">
+-->
         <div class="col-12 text-center">
-            <button class="btn btn-primary" @click="createOrder"> Create Order </button>
+            <!--
+            <button class="btn btn-primary" type="submit">Make Payment</button>
+            -->
+            <button class="btn btn-primary" type="button" @click="makePayment">Make Payment</button>
         </div>
     </form>
     <br/>
-    <h5>Order Response</h5>
+</script>
+
+<script type="text/x-template" id="app-razorpay-success-view">
     <br/>
-    <pre>{{ orderResponse }}</pre>
+    <!--
+    <pre>{{ itemS }}</pre>
     -->
+    <h5>Razor Payment Id : <code>{{ item.razorpay_payment_id }}</code></h5>
 </script>
 
-<script type="text/x-template" id="app-success-view">
-    <p>Welcome Success!</p>
-</script>
-
-<script type="text/x-template" id="app-failure-view">
-    <p>Welcome Failure!</p>
+<script type="text/x-template" id="app-razorpay-failure-view">
+    <br/>
+    <!--
+    <pre>{{ itemS }}</pre>
+    -->
+    <h5>Error Code : <code>{{ item.error.code }}</code></h5>
 </script>
 
 <script type="text/x-template" id="app-root-view">
@@ -174,12 +244,12 @@
                                 PayU
                             </router-link>
                         </li>
-                        <!--
                         <li class="nav-item">
                             <router-link to="/razorpay/pay" class="nav-link px-2"  :class="{ active: $route.name === 'Razor Pay' }">
                                 Razor Pay
                             </router-link>
                         </li>
+                        <!--
                         <li class="nav-item">
                             <router-link to="/success" class="nav-link px-2"  :class="{ active: $route.name === 'Payment Success' }">
                                 Payment Success
@@ -235,9 +305,7 @@
 
 </script>
 
-<!--
-<script src="https://cdn.jsdelivr.net/npm/jscrypto@1.0.3/index.min.js"></script>
--->
+<script src="//checkout.razorpay.com/v1/checkout.js"></script>
 <script src="//cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
 <script src="//unpkg.com/axios/dist/axios.min.js"></script>
 <script src="//unpkg.com/vue@next"></script>
