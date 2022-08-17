@@ -59,14 +59,12 @@
             <input type="text" class="form-control" id="firstName"
                    name="firstname" v-model="item.firstname" required>
         </div>
-        <!--
         <div class="col-md-4">
             <label for="lastname" class="form-label">Last Name</label>
             <input type="text" class="form-control" id="lastname"
-                   name="lastname" v-model="item.lastname" required>
+                   name="lastname" v-model="item.lastname">
         </div>
-        -->
-        <div class="col-md-8 text-center">
+        <div class="col-md-4 text-center">
             <br/>
             <button type="button" class="btn btn-warning py-2"
                     @click="reComputeHashInputAndValue()">
